@@ -18,11 +18,11 @@
                                           //         error and status messages, use CONSOLE for VT100 debug console,
                                           //         or use PROFILER for VT100 task profiler.
 
-#define DEBUG_SERVO                   ON //    OFF, n. Where n=1 to 9 as the designated axis for logging servo activity.     Option
-#define DEBUG_ECHO_COMMANDS           ON //    OFF, Use ON to log command/responses to the debug serial port.                Option
-#define DEBUG_CONNECT_CHECK           ON //    OFF, ON to enable debug code for connection checks.                           Infreq
-#define DEBUG_SD                      ON //    OFF, ON to enable debug code for the SD card support, use VERBOSE for all.    Infreq
-#define DEBUG_WEBSERVER               ON //    OFF, ON to enable debug code for the webserver.                               Infreq
+#define DEBUG_SERVO                   OFF //    OFF, n. Where n=1 to 9 as the designated axis for logging servo activity.     Option
+#define DEBUG_ECHO_COMMANDS           OFF //    OFF, Use ON to log command/responses to the debug serial port.                Option
+#define DEBUG_CONNECT_CHECK           OFF //    OFF, ON to enable debug code for connection checks.                           Infreq
+#define DEBUG_SD                      OFF //    OFF, ON to enable debug code for the SD card support, use VERBOSE for all.    Infreq
+#define DEBUG_WEBSERVER               OFF //    OFF, ON to enable debug code for the webserver.                               Infreq
 #define DEBUG_CMDSERVER               OFF //    OFF, ON to enable debug code for the command server on port 9999.             Infreq
 
 #define SERIAL_DEBUG               Serial // Serial, Use any h/w serial port. Serial1 or Serial2, etc. as supported.          Option
