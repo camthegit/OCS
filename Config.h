@@ -274,8 +274,8 @@
 
 #define SERVO_ANALOG_WRITE_FREQUENCY   1000 //    CT added here OFF, n. Where n=1..100 (Hz) PWM frequency for SERVO_PE or SERVO_EE driver models. Option   
 #define AXIS1_STEPS_PER_DEGREE       3.5 //   60.0, n. Number of steps per degree for dome.                                  Adjust
-#define AXIS1_ENCODER_A_PIN           22  // CT added Swap 32 with your physical GPIO pin for Channel A
-#define AXIS1_ENCODER_B_PIN           23  // CT added 
+#define AXIS1_ENCODER_A_PIN           22 // CT added Swap 32 with your physical GPIO pin for Channel A
+#define AXIS1_ENCODER_B_PIN           23 // CT added 
 #define AXIS1_REVERSE                 OFF //    OFF, ON Reverses movement direction, or reverse wiring instead to correct.    Option
 #define AXIS1_POWER_DOWN              OFF //    OFF, ON Powers off 30sec after movement stops or 10min after last<=1x guide.  Option
 
@@ -283,7 +283,7 @@
 #define AXIS1_LIMIT_MAX               180 //    180, n. Where n= 0.. 360 (degrees.) Maximum Azimuth.                          Adjust
 
 #define AXIS1_SENSE_HOME              HIGH //    OFF, HIGH or LOW enables & state clockwise home position, as seen from front. Option
-#define AXIS1_SENSE_HOME_PIN          17   // CT added
+#define AXIS1_SENSE_HOME_PIN          17 // CT added
 #define AXIS1_SENSE_LIMIT_MIN         OFF //    OFF, HIGH or LOW state on limit sense switch stops movement.                  Option
 #define AXIS1_SENSE_LIMIT_MAX         OFF //    OFF, HIGH or LOW state on limit sense switch stops movement.                  Option
                                           //         Digital, optionally add: |HYST(n) Where n=0..1023 stability time in ms.
