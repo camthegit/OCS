@@ -519,9 +519,6 @@
   #ifndef AXIS1_ENCODER_REVERSE
   #define AXIS1_ENCODER_REVERSE        OFF
   #endif
-  #ifndef AXIS1_SERVO_FEEDBACK
-  #define AXIS1_SERVO_FEEDBACK         FB_PID
-  #endif
   #ifndef AXIS1_SERVO_PH1_STATE
   #define AXIS1_SERVO_PH1_STATE        LOW
   #endif
@@ -684,9 +681,6 @@
   #endif
   #ifndef AXIS2_ENCODER_REVERSE
   #define AXIS2_ENCODER_REVERSE         OFF
-  #endif
-  #ifndef AXIS2_SERVO_FEEDBACK
-  #define AXIS2_SERVO_FEEDBACK          FB_PID
   #endif
   #ifndef AXIS2_SERVO_PH1_STATE
   #define AXIS2_SERVO_PH1_STATE         LOW
