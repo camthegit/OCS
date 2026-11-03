@@ -18,10 +18,10 @@
 // =================================================================================================================================
 // CONTROLLER ======================================================================================================================
 
-#define HOST_NAME                   "OCS" //  "OCS", This devices name up to 16 chars.                                        Adjust
+#define HOST_NAME                   "OCS_WOMBAT" //  "OCS", This devices name up to 16 chars.                                        Adjust
 
 // PINMAP --------------------------------------------------------------------------------------------------------------------------
-#define PINMAP                        OFF //    OFF, Choose from: LEGACY, OCS1, OCS2, OCS3, OCS4, OCS_ESP1, OCS_ESP2.        <-Req'd
+#define PINMAP                        OCS4 //    OFF, Choose from: LEGACY, OCS1, OCS2, OCS3, OCS4, OCS_ESP1, OCS_ESP2.        <-Req'd
                                           //         Other boards/more info. in /src/Constants.h
 
 // SERIAL PORT COMMAND CHANNELS ----------------------------------------------------------------------------------------------------
@@ -41,7 +41,7 @@
 #define WATCHDOG                      OFF //    OFF, ON resets OCS after 8 sec. if it hangs for (nearly) any reason.          Option
 
 // NETWORK SETTINGS ----------------------------------------------------------------------------------------------------------------
-#define ASCOM_ALPACA_SERVER           OFF //    OFF, ON enables ASCOM Alpaca server on port 10000, requires W5500 Ethernet.   Option
+#define ASCOM_ALPACA_SERVER           ON //    OFF, ON enables ASCOM Alpaca server on port 10000, requires W5500 Ethernet.   Option
                                           //         Note: this disables the IP command servers on ports 9998, 9999 and
                                           //         works best w/my Ethernet library from: https://github.com/hjd1964/Ethernet
 #define CONNECT_CHECK_HOURS           OFF //    OFF, n. Where n=1 to 48 (hours.)  Connection check time.                      Option
@@ -52,11 +52,11 @@
 #define TIME_LOCATION_SOURCE          NTP //    NTP, Network Time Protocol w/IP address settings below, or DS3231 (I2C),      Adjust
                                           //         SD3031 (I2C), DS3234 (SPI), TEENSY.
 #define TIME_NTP_IP         {129,6,15,28} // ...6,15,28}, time-a-g.nist.gov at 129,6,15,28 or 129,6,15,29, 129,6,15,30, etc.  Option
-#define TIME_ZONE                      -5 //     -5, Time Zone (US Eastern Standard Time in this case.)                      <-Req'd
+#define TIME_ZONE                      +10 //     -5, Time Zone (US Eastern Standard Time in this case.)                      <-Req'd
 #define TIME_DISPLAY                  STD //    STD, Display Standard Time, UT1 to display Universal Time.                    Adjust
 
 // STATUS PANEL FEATURES -----------------------------------------------------------------------------------------------------------
-#define STAT                          OFF //    OFF, ON to enable the OCS website status panel display.                       Option
+#define STAT                          ON //    OFF, ON to enable the OCS website status panel display.                       Option
 
 #define STAT_MAINS_SENSE              OFF //    OFF, n. Where n=1..8 (Sense#) mains power good, OFF (power failure) is UNSAFE Option
 #define STAT_MAINS_CURRENT_ANALOG     OFF //    OFF, n. Where n=1..16 (Analog#) measure/display current mains.                Option
@@ -82,40 +82,40 @@
 #define STAT_PROCESSOR_RAM            OFF //    OFF, ON for display of Processor free RAM resources. Mega2560 only.           Option
 
 // POWER PANEL ---------------------------------------------------------------------------------------------------------------------
-#define POWER                         OFF //    OFF, ON to enable the OCS website power panel display.                        Option
+#define POWER                         ON //    OFF, ON to enable the OCS website power panel display.                        Option
 
-#define POWER_DEVICE1_RELAY           OFF //    OFF, n. Where n=1..18 (Relay#) with _NAME below.                              Option
+#define POWER_DEVICE1_RELAY           1 //    OFF, n. Where n=1..18 (Relay#) with _NAME below.                              Option
 #define POWER_DEVICE1_MEMORY          OFF //    OFF, ON to enable memory (across power cycles) for this relay state.          Option
-#define POWER_DEVICE1_NAME ""
+#define POWER_DEVICE1_NAME "TEST 1"
 
-#define POWER_DEVICE2_RELAY           OFF //    OFF, n. Where n=1..18 (Relay#) with _NAME below.                              Option
+#define POWER_DEVICE2_RELAY           2 //    OFF, n. Where n=1..18 (Relay#) with _NAME below.                              Option
 #define POWER_DEVICE2_MEMORY          OFF //    OFF, ON to enable memory (across power cycles) for this relay state.          Option
-#define POWER_DEVICE2_NAME ""
+#define POWER_DEVICE2_NAME "TEST 2"
 
-#define POWER_DEVICE3_RELAY           OFF //    OFF, n. Where n=1..18 (Relay#) with _NAME below.                              Option
+#define POWER_DEVICE3_RELAY           3 //    OFF, n. Where n=1..18 (Relay#) with _NAME below.                              Option
 #define POWER_DEVICE3_MEMORY          OFF //    OFF, ON to enable memory (across power cycles) for this relay state.          Option
-#define POWER_DEVICE3_NAME ""
+#define POWER_DEVICE3_NAME "TEST 3"
 
 #define POWER_DEVICE4_RELAY           OFF //    OFF, n. Where n=1..18 (Relay#) with _NAME below.                              Option
 #define POWER_DEVICE4_MEMORY          OFF //    OFF, ON to enable memory (across power cycles) for this relay state.          Option
-#define POWER_DEVICE4_NAME ""
+#define POWER_DEVICE4_NAME "TEST PWM 7"
 
-#define POWER_DEVICE5_RELAY           OFF //    OFF, n. Where n=1..18 (Relay#) with _NAME below.                              Option
+#define POWER_DEVICE5_RELAY           8 //    OFF, n. Where n=1..18 (Relay#) with _NAME below.                              Option
 #define POWER_DEVICE5_MEMORY          OFF //    OFF, ON to enable memory (across power cycles) for this relay state.          Option
-#define POWER_DEVICE5_NAME ""
+#define POWER_DEVICE5_NAME "TEST 8"
 
 #define POWER_DEVICE6_RELAY           OFF //    OFF, n. Where n=1..18 (Relay#) with _NAME below                               Option
 #define POWER_DEVICE6_MEMORY          OFF //    OFF, ON to enable memory (across power cycles) for this relay state.          Option
 #define POWER_DEVICE6_NAME ""
 
 // LIGHTING PANEL ------------------------------------------------------------------------------------------------------------------
-#define LIGHT                         OFF //    OFF, ON to enable the OCS website lighting panel display.                     Option
+#define LIGHT                         ON //    OFF, ON to enable the OCS website lighting panel display.                     Option
 
-#define LIGHT_WRW_RELAY               OFF //    OFF, n. Where n=1..18 (Relay#) for Warm room white lights.                    Option
-#define LIGHT_WRR_RELAY               OFF //    OFF, n. Where n=1..18 (Relay#) for Warm room red lights.                      Option
+#define LIGHT_WRW_RELAY               11 //    OFF, n. Where n=1..18 (Relay#) for Warm room white lights.                    Option
+#define LIGHT_WRR_RELAY               10 //    OFF, n. Where n=1..18 (Relay#) for Warm room red lights.                      Option
 #define LIGHT_ORW_RELAY               OFF //    OFF, n. Where n=1..18 (Relay#) for Observing room white lights.               Option
 #define LIGHT_ORR_RELAY               OFF //    OFF, n. Where n=1..18 (Relay#) for Observing room red lights.                 Option
-#define LIGHT_OUTSIDE_RELAY           OFF //    OFF, n. Where n=1..18 (Relay#) for Outside flood.                             Option
+#define LIGHT_OUTSIDE_RELAY           12 //    OFF, n. Where n=1..18 (Relay#) for Outside flood.                             Option
 
 #define LIGHT_STRIP_DATA_PIN          OFF //    OFF, n. GPIO pin to LED controller chips (default WS2811RGB.)                 Option
 #define LIGHT_STRIP_COUNT              16 //     16, n. Where n=1..1000 LED controller chip count.                            Option
@@ -220,8 +220,8 @@
 #define THERMOSTAT_SENSOR_T_ANALOG2DEGC(x) (((x*3.3)-0.1)*100.0-40.0)
 
 // ROOF/SHUTTER CONTROL PANEL ------------------------------------------------------------------------------------------------------
-#define ROOF                          OFF //    OFF, ON to enable the OCS website roof/dome shutter panel display.            Option
-#define ROOF_USER_SAFETY_OVERRIDE     OFF //    OFF, ON displays safety override button.                                      Option
+#define ROOF                          ON //    OFF, ON to enable the OCS website roof/dome shutter panel display.            Option
+#define ROOF_USER_SAFETY_OVERRIDE     ON //    OFF, ON displays safety override button.                                      Option
 
 #define ROOF_ACTUATE_SENSE            OFF //    OFF, n. Where n=1..8 (Sense#) for momentary switch to open or close roof.     Option
 #define ROOF_AUTOCLOSE_DAWN           OFF //    OFF, ON displays option to automatically close roof at dawn.                  Option
@@ -232,8 +232,8 @@
 #define ROOF_MOUNT_PARK_RELAY         OFF //    OFF, n. Where n=1..18 (Relay#) momentarily engages this relay to park mount.  Option
 #define ROOF_MOUNT_PARK_TIMEOUT        30 //     30, n. Where n=20..480 (seconds) Maximum time to park mount before error.    Adjust
 
-#define ROOF_MOTOR_OPEN_RELAY         OFF //    OFF, n. Where n=1..18 (Relay#) engages this relay to open roof.               Option
-#define ROOF_MOTOR_CLOSE_RELAY        OFF //    OFF, n. Where n=1..18 (Relay#) engages this relay to close roof.              Option
+#define ROOF_MOTOR_OPEN_RELAY         4 //    OFF, n. Where n=1..18 (Relay#) engages this relay to open roof.               Option
+#define ROOF_MOTOR_CLOSE_RELAY        5 //    OFF, n. Where n=1..18 (Relay#) engages this relay to close roof.              Option
 #define ROOF_MOTOR_PRESS_TIME         1.5 //    1.5, n. Where n=1..10 (seconds) For garage door openers.                      Infreq
 #define ROOF_MOTOR_RELAY_MOMENTARY    OFF //    OFF, ON engage momentarily (_PRESS_TIME) to start an automatic open or close. Option
 #define ROOF_MOTOR_STOP_RELAY         OFF //    OFF, n. Where n=1..18 (Relay#) momentarily engages this relay to stop roof.   Option
@@ -244,8 +244,8 @@
 #define ROOF_POWER_PWM_POWER          OFF //    OFF, n. Where n=10..100 (%) PWM power level for roof motor DC control.        Option
 #define ROOF_POWER_PWM_SOFTSTART      OFF //    OFF, ON For PWM soft start, start 0% adds 5%/sec until ROOF_POWER_PWM_POWER.  Option
 
-#define ROOF_LIMIT_OPENED_SENSE       OFF //    OFF, n. Where n=1..8 (Sense#) Roof open limit switch (OPEN when ON.)          Option
-#define ROOF_LIMIT_CLOSED_SENSE       OFF //    OFF, n. Where n=1..8 (Sense#) Roof closed limit switch (CLOSED when ON.)      Option
+#define ROOF_LIMIT_OPENED_SENSE       1 //    OFF, n. Where n=1..8 (Sense#) Roof open limit switch (OPEN when ON.)          Option
+#define ROOF_LIMIT_CLOSED_SENSE       2 //    OFF, n. Where n=1..8 (Sense#) Roof closed limit switch (CLOSED when ON.)      Option
 #define ROOF_LIMIT_SENSE_FAIL_TIME      6 //      6, n. Where n=1..60 (seconds) Time to limit switch disengage failure error. Infreq
 #define ROOF_INTERLOCK_SENSE          OFF //    OFF, n. Where n=1..8 (Sense#) Roof safety interlock, motion allowed when ON.  Option
 #define ROOF_INTERLOCK_PRE_MOVE_TIME  1.5 //    1.5, n. Where n=1..10 (seconds) For roof open interlock sense.                Infreq
@@ -255,31 +255,35 @@
 #define ROOF_TIME_TOL                  30 //     30, n. Where n=0..120 (seconds) Additional time before stop & error thrown.  Adjust
 
 // DOME CONTROL PANEL --------------------------------------------------------------------------------------------------------------
-#define DOME                          OFF //    OFF, ON to enable the OCS website dome panel display.                         Option
+#define DOME                          ON //    OFF, ON to enable the OCS website dome panel display.                         Option
 
 #define DOME_SHUTTER_LOCK             OFF //    OFF, ON to disable dome motion unless shutter is open.                        Option
 
 // Usually this will be a GENERIC stepper driver or a servo SERVO_PE (Phase/Enable) or SERVO_EE (Enable/Enable)
-#define AXIS1_DRIVER_MODEL            OFF //    OFF, Enter driver model (above) to activate the dome Azimuth axis.            Option
+#define AXIS1_DRIVER_MODEL            SERVO_EE //    OFF, Enter driver model (above) to activate the dome Azimuth axis.            Option
 #define AXIS1_DRIVER_MICROSTEPS       OFF //    OFF, n. Microstep mode when tracking.                                         Option
 #define AXIS1_DRIVER_STATUS           OFF //    OFF, ON, HIGH, or LOW.  For driver status info/fault detection.               Option
 
 // for SERVO_PE and SERVO_EE driver models, encoder and PID settings:
-#define AXIS1_ENCODER                 OFF //    OFF, AB, CW_CCW, PULSE_DIR, PULSE_ONLY, SERIAL_BRIDGE.                        Option
+#define AXIS1_ENCODER                 AB //    OFF, AB, CW_CCW, PULSE_DIR, PULSE_ONLY, SERIAL_BRIDGE.                        Option
 #define AXIS1_PID_P                   2.0 //    2.0, Proportional; scale of immediate response to position error.             Adjust
 #define AXIS1_PID_I                   5.0 //    5.0, Integral; rate of increasing response to position error over time.       Adjust
 #define AXIS1_PID_D                   1.0 //    1.0, Derivative; overshoot supression.                                        Adjust
 
 #define AXIS1_SLEW_RATE_DESIRED       1.0 //    1.0, n, (degrees/second) Maximum speed depends on processor.                  Adjust
 
-#define AXIS1_STEPS_PER_DEGREE       60.0 //   60.0, n. Number of steps per degree for dome.                                  Adjust
+#define SERVO_ANALOG_WRITE_FREQUENCY   1000 //    CT added here OFF, n. Where n=1..100 (Hz) PWM frequency for SERVO_PE or SERVO_EE driver models. Option   
+#define AXIS1_STEPS_PER_DEGREE       3.5 //   60.0, n. Number of steps per degree for dome.                                  Adjust
+#define AXIS1_ENCODER_A_PIN           22  // CT added Swap 32 with your physical GPIO pin for Channel A
+#define AXIS1_ENCODER_B_PIN           23  // CT added 
 #define AXIS1_REVERSE                 OFF //    OFF, ON Reverses movement direction, or reverse wiring instead to correct.    Option
 #define AXIS1_POWER_DOWN              OFF //    OFF, ON Powers off 30sec after movement stops or 10min after last<=1x guide.  Option
 
 #define AXIS1_LIMIT_MIN              -180 //   -180, n. Where n= 0..-360 (degrees.) Minimum Azimuth.                          Adjust
 #define AXIS1_LIMIT_MAX               180 //    180, n. Where n= 0.. 360 (degrees.) Maximum Azimuth.                          Adjust
 
-#define AXIS1_SENSE_HOME              OFF //    OFF, HIGH or LOW enables & state clockwise home position, as seen from front. Option
+#define AXIS1_SENSE_HOME              HIGH //    OFF, HIGH or LOW enables & state clockwise home position, as seen from front. Option
+#define AXIS1_SENSE_HOME_PIN          17   // CT added
 #define AXIS1_SENSE_LIMIT_MIN         OFF //    OFF, HIGH or LOW state on limit sense switch stops movement.                  Option
 #define AXIS1_SENSE_LIMIT_MAX         OFF //    OFF, HIGH or LOW state on limit sense switch stops movement.                  Option
                                           //         Digital, optionally add: |HYST(n) Where n=0..1023 stability time in ms.
@@ -287,7 +291,7 @@
                                           //         |THLD(n) Where n=1..1023 (ADU) for Analog threshold.
                                           //         |HYST(n) Where n=0..1023 (ADU) for +/- Hystersis range.
 
-#define AXIS1_WRAP                    OFF //    OFF, ON Allows unlimited Azm range and ignores min/max limits.                Option
+#define AXIS1_WRAP                    ON //    OFF, ON Allows unlimited Azm range and ignores min/max limits.                Option
 
 #define AXIS2_DRIVER_MODEL            OFF //    OFF, Enter driver model to activate the (optional) dome Altitude axis.        Option
 #define AXIS2_DRIVER_MICROSTEPS       OFF //    OFF, n. Microstep mode when tracking.                                         Option

@@ -1,0 +1,12 @@
+Encoder A Pin: 22  (AD7)
+Encoder B pin: 23  (AD8)
+Home sensor: 17   (AIN4)
+
+Roof (shutter) limit opened sense: 2  (DIN2)
+Roof limit closed sense: 1  (DIN1)
+Roof motor open relay: 3  (pin 26)
+Roof motor close relay: 4  (pin 27)
+
+Light outside relay: 12  (pin 35)
+Other light relays: 8, 9, 10, 11  (pins 31-34)
+Test power relays: 1-5  (pins 24-28)

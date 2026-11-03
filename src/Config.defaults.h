@@ -183,7 +183,7 @@
 #define RELAY5_ON_STATE                HIGH
 #endif
 #ifndef RELAY6_DEFAULT_STATE
-#define RELAY6_DEFAULT_STATE           HIGH
+#define RELAY6_DEFAULT_STATE           OFF
 #endif
 #ifndef RELAY6_ON_STATE
 #define RELAY6_ON_STATE                HIGH
