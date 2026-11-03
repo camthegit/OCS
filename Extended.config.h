@@ -14,15 +14,15 @@
 // DEBUG ----------------------------------------------------------------------------------------------------------------------------
 // Enable additional debugging and/or status messages on the specified SERIAL_DEBUG port
 // Note that the SERIAL_DEBUG port cannot be used for normal communication with OnStep
-#define DEBUG                         OFF //    OFF, Use ON for background error messages only, use VERBOSE for all           Infreq
+#define DEBUG                         ON //    OFF, Use ON for background error messages only, use VERBOSE for all           Infreq
                                           //         error and status messages, use CONSOLE for VT100 debug console,
                                           //         or use PROFILER for VT100 task profiler.
 
-#define DEBUG_SERVO                   OFF //    OFF, n. Where n=1 to 9 as the designated axis for logging servo activity.     Option
-#define DEBUG_ECHO_COMMANDS           OFF //    OFF, Use ON to log command/responses to the debug serial port.                Option
-#define DEBUG_CONNECT_CHECK           OFF //    OFF, ON to enable debug code for connection checks.                           Infreq
-#define DEBUG_SD                      OFF //    OFF, ON to enable debug code for the SD card support, use VERBOSE for all.    Infreq
-#define DEBUG_WEBSERVER               OFF //    OFF, ON to enable debug code for the webserver.                               Infreq
+#define DEBUG_SERVO                   ON //    OFF, n. Where n=1 to 9 as the designated axis for logging servo activity.     Option
+#define DEBUG_ECHO_COMMANDS           ON //    OFF, Use ON to log command/responses to the debug serial port.                Option
+#define DEBUG_CONNECT_CHECK           ON //    OFF, ON to enable debug code for connection checks.                           Infreq
+#define DEBUG_SD                      ON //    OFF, ON to enable debug code for the SD card support, use VERBOSE for all.    Infreq
+#define DEBUG_WEBSERVER               ON //    OFF, ON to enable debug code for the webserver.                               Infreq
 #define DEBUG_CMDSERVER               OFF //    OFF, ON to enable debug code for the command server on port 9999.             Infreq
 
 #define SERIAL_DEBUG               Serial // Serial, Use any h/w serial port. Serial1 or Serial2, etc. as supported.          Option
@@ -48,12 +48,12 @@
 #define AP_GW_ADDR          {192,168,1,1} // ..,168,1,1}, Wifi Access Point GATEWAY Address.                                  Adjust
 #define AP_SN_MASK        {255,255,255,0} // ..55,255,0}, Wifi Access Point SUBNET Mask.                                      Adjust
 
-#define STA_ENABLED                  true //        true, Wifi Station Enabled.                                               Adjust
-#define STA_DHCP_ENABLED            false //       false, Ethernet/Wifi Station DHCP Enabled.                                 Adjust
+#define STA_ENABLED                 false //        true, Wifi Station Enabled.                                               Adjust
+#define STA_DHCP_ENABLED            true //       false, Ethernet/Wifi Station DHCP Enabled.                                 Adjust
 #define STA_SSID                   "Home" //      "Home", Wifi Station SSID to connnect to.                                   Adjust
 #define STA_PASSWORD           "password" //  "password", Wifi Station mode password.                                         Adjust
-#define STA_IP_ADDR        {192,168,1,50} // ..168,1,50}, Ethernet/Wifi Station IP Address.                                   Adjust
-#define STA_GW_ADDR         {192,168,1,1} // ..,168,1,1}, Ethernet/Wifi Station GATEWAY Address.                              Adjust
+#define STA_IP_ADDR        {10,0,0,47} // ..168,1,50}, Ethernet/Wifi Station IP Address.                                   Adjust
+#define STA_GW_ADDR         {10,0,0,1} // ..,168,1,1}, Ethernet/Wifi Station GATEWAY Address.                              Adjust
 #define STA_SN_MASK       {255,255,255,0} // ..55,255,0}, Ethernet/Wifi Station SUBNET Mask.                                  Adjust
 
 #define STA_NAME                 "OnStep" //   "OnStep" , Wifi OnStep Mount mNDS Hostname.                                    Adjust
