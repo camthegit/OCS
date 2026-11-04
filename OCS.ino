@@ -55,6 +55,7 @@
 #include "src/pages/chartJS/ChartJS.h"
 
 #include "src/plugins/Plugins.config.h"
+#include "Extended.config.h"
 
 char ocsVersion[10];
 
