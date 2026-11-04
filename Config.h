@@ -23,6 +23,7 @@
 // PINMAP --------------------------------------------------------------------------------------------------------------------------
 #define PINMAP                        OCS4 //    OFF, Choose from: LEGACY, OCS1, OCS2, OCS3, OCS4, OCS_ESP1, OCS_ESP2.        <-Req'd
                                           //         Other boards/more info. in /src/Constants.h
+#define SENSE_MAX                       9 // CT added, 1..9, Number of SENSE inputs used for relays and/or switches.                 Adjust
 
 // SERIAL PORT COMMAND CHANNELS ----------------------------------------------------------------------------------------------------
 #define SERIAL_A_BAUD_DEFAULT        9600 //   9600, n. Where n=9600,19200,57600,115200 (common baud rates.)                  Infreq
