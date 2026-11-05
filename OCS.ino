@@ -42,6 +42,7 @@
 #define FirmwareVersionPatch        "k"    // for example major.minor patch: 10.03c
 #define FirmwareVersionConfig       2      // internal, for tracking configuration file changes
 
+#include <Arduino.h>
 #include "src/Common.h"
 
 #include "src/lib/tasks/OnTask.h"
