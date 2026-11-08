@@ -59,6 +59,7 @@
 #include "Extended.config.h"
 
 char ocsVersion[10];
+float remoteBatteryVoltage = NAN;
 
 #if DEBUG == PROFILER
   extern void profiler();
@@ -266,7 +267,7 @@ void processWirelessShutterTelemetry() {
         }
 
         // Parse the decimal battery telemetry data safely from the string
-        float remoteBatteryVoltage = batteryVolts.toFloat();
+        remoteBatteryVoltage = batteryVolts.toFloat();
 
         // Feed the battery value into the debug stream if debugging is active
         #if DEBUG != OFF
