@@ -28,7 +28,7 @@
 // SERIAL PORT COMMAND CHANNELS ----------------------------------------------------------------------------------------------------
 #define SERIAL_A_BAUD_DEFAULT        9600 //   9600, n. Where n=9600,19200,57600,115200 (common baud rates.)                  Infreq
 #define SERIAL_B_BAUD_DEFAULT         OFF //    OFF, n. Where n=9600,19200,57600,115200 (common baud rates.)                  Option
-#define SERIAL_C_BAUD_DEFAULT         OFF //    OFF, n. Where n=9600,19200,57600,115200 (common baud rates.)                  Option
+#define SERIAL_C_BAUD_DEFAULT      115200 //    OFF, n. Where n=9600,19200,57600,115200 (common baud rates.)                  Option
 
 // SERIAL CLIENT CONNECTION TO ONSTEP ----------------------------------------------------------------------------------------------
 #define SERIAL_ONSTEP                 OFF //    OFF, Serial1, NETWORK_STATION, etc. specify serial interface to OnStep.       Option
@@ -71,11 +71,11 @@
 #define STAT_DC_VOLTAGE_ANALOG        OFF //    OFF, n. Where n=1..16 (Analog#) measure/display 12VDC power supply voltage.   Option
 #define STAT_DC_CURRENT_ANALOG        OFF //    OFF, n. Where n=1..16 (Analog#) measure/display 12VDC power supply current.   Option
 
-#define STAT_BATTERY_VOLTAGE_ANALOG   OFF //    OFF, n. Where n=1..16 (Analog#) measure/display 12V roof battery voltage.     Option
+#define STAT_BATTERY_VOLTAGE_ANALOG   1 //    OFF, n. Where n=1..16 (Analog#) measure/display 12V roof battery voltage.     Option
 #define STAT_BATTERY_CURRENT_ANALOG   OFF //    OFF, n. Where n=1..16 (Analog#) measure/display 12V roof battery current.     Option
 
 // Converts the analog measure (range 0 to 1.0) to Volts
-#define STAT_DC_ANALOG_TO_VOLTAGE(x) (x*NAN)
+#define STAT_DC_ANALOG_TO_VOLTAGE(x) (x)
 
 // Converts the analog measure (range 0 to 1.0) to Amps
 #define STAT_DC_ANALOG_TO_CURRENT(x) (x*NAN)
@@ -85,11 +85,11 @@
 // POWER PANEL ---------------------------------------------------------------------------------------------------------------------
 #define POWER                         ON //    OFF, ON to enable the OCS website power panel display.                        Option
 
-#define POWER_DEVICE1_RELAY           1 //    OFF, n. Where n=1..18 (Relay#) with _NAME below.                              Option
+#define POWER_DEVICE1_RELAY           OFF //    OFF, n. Where n=1..18 (Relay#) with _NAME below.                              Option
 #define POWER_DEVICE1_MEMORY          OFF //    OFF, ON to enable memory (across power cycles) for this relay state.          Option
 #define POWER_DEVICE1_NAME "TEST 1"
 
-#define POWER_DEVICE2_RELAY           2 //    OFF, n. Where n=1..18 (Relay#) with _NAME below.                              Option
+#define POWER_DEVICE2_RELAY           OFF //    OFF, n. Where n=1..18 (Relay#) with _NAME below.                              Option
 #define POWER_DEVICE2_MEMORY          OFF //    OFF, ON to enable memory (across power cycles) for this relay state.          Option
 #define POWER_DEVICE2_NAME "TEST 2"
 
@@ -233,8 +233,8 @@
 #define ROOF_MOUNT_PARK_RELAY         OFF //    OFF, n. Where n=1..18 (Relay#) momentarily engages this relay to park mount.  Option
 #define ROOF_MOUNT_PARK_TIMEOUT        30 //     30, n. Where n=20..480 (seconds) Maximum time to park mount before error.    Adjust
 
-#define ROOF_MOTOR_OPEN_RELAY         4 //    OFF, n. Where n=1..18 (Relay#) engages this relay to open roof.               Option
-#define ROOF_MOTOR_CLOSE_RELAY        5 //    OFF, n. Where n=1..18 (Relay#) engages this relay to close roof.              Option
+#define ROOF_MOTOR_OPEN_RELAY         1 //    OFF, n. Where n=1..18 (Relay#) engages this relay to open roof.               Option
+#define ROOF_MOTOR_CLOSE_RELAY        2 //    OFF, n. Where n=1..18 (Relay#) engages this relay to close roof.              Option
 #define ROOF_MOTOR_PRESS_TIME         1.5 //    1.5, n. Where n=1..10 (seconds) For garage door openers.                      Infreq
 #define ROOF_MOTOR_RELAY_MOMENTARY    OFF //    OFF, ON engage momentarily (_PRESS_TIME) to start an automatic open or close. Option
 #define ROOF_MOTOR_STOP_RELAY         OFF //    OFF, n. Where n=1..18 (Relay#) momentarily engages this relay to stop roof.   Option

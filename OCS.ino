@@ -214,7 +214,74 @@ void setup() {
   #endif
 }
 
+// READ WIRELESS TELEMETRY FROM SERIAL_C (Serial3) WITHOUT BLOCKING
+#include "src/observatory/roof/Roof.h" 
+void processWirelessShutterTelemetry() {
+  #ifdef SERIAL_C
+    if (SERIAL_C.available() > 0) {
+      String incomingPayload = SERIAL_C.readStringUntil('\n');
+      incomingPayload.trim();
+
+      int commaIndex = incomingPayload.indexOf(',');
+      if (commaIndex != -1) {
+        String shutterStatus = incomingPayload.substring(0, commaIndex);
+        String batteryVolts  = incomingPayload.substring(commaIndex + 1);
+
+        // -----------------------------------------------------------------
+        // Synchronizing with Howard's Open-Source State Engine
+        // -----------------------------------------------------------------
+        if (shutterStatus == "OPEN") {
+          // If the OCS software was actively tracking an open movement,
+          // cleanly halt the background software timers.
+          if (roof.isOpening()) {
+            roof.stop(); 
+          }
+          // Drive the Sense macro pins to trigger the OCS internal registers
+          pinMode(SENSE1_PIN, OUTPUT); digitalWrite(SENSE1_PIN, LOW);  // Ground "Open Limit Switch"
+          pinMode(SENSE2_PIN, OUTPUT); digitalWrite(SENSE2_PIN, HIGH); // Disconnect "Closed Limit Switch"
+        } 
+        else if (shutterStatus == "CLOSED") {
+          if (roof.isClosing()) {
+            roof.stop();
+          }
+          pinMode(SENSE1_PIN, OUTPUT); digitalWrite(SENSE1_PIN, HIGH); // Disconnect "Open Limit Switch"
+          pinMode(SENSE2_PIN, OUTPUT); digitalWrite(SENSE2_PIN, LOW);  // Ground "Closed Limit Switch"
+        }
+        else if (shutterStatus == "MOVING") {
+          // While in transit, clear both digital limit switches to signal movement
+          pinMode(SENSE1_PIN, OUTPUT); digitalWrite(SENSE1_PIN, HIGH);
+          pinMode(SENSE2_PIN, OUTPUT); digitalWrite(SENSE2_PIN, HIGH);
+        }
+        if (shutterStatus == "ERROR") {
+          // If the roof failed or timed out, call roof.stop() instantly
+          roof.stop(); 
+          
+          // Disconnect both limit switches to flag a fault status condition inside OCS
+          pinMode(SENSE1_PIN, OUTPUT); digitalWrite(SENSE1_PIN, HIGH);
+          pinMode(SENSE2_PIN, OUTPUT); digitalWrite(SENSE2_PIN, HIGH);
+          
+          #if DEBUG != OFF
+            SERIAL_DEBUG.println("⚠️ EMERGENCY TELEMETRY: Shutter Reported an Error State!");
+          #endif
+        }
+
+        // Parse the decimal battery telemetry data safely from the string
+        float remoteBatteryVoltage = batteryVolts.toFloat();
+
+        // Feed the battery value into the debug stream if debugging is active
+        #if DEBUG != OFF
+          SERIAL_DEBUG.print("Telemetry - Dome Battery: ");
+          SERIAL_DEBUG.print(remoteBatteryVoltage);
+          SERIAL_DEBUG.println(" V");
+        #endif
+      }
+    }
+  #endif
+}
+
 void loop() {
   tasks.yield();
+  // EVALUATE INCOMING UART DATA ON EVERY MAIN CYCLE
+  processWirelessShutterTelemetry();
   watchdog.reset();
 }
