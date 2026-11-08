@@ -19,6 +19,15 @@
   void getStatusAmpsStr(float f, char *temp);
   void getStatusMainsStr(float f, char *temp);
 
+  #if STAT_BATTERY_VOLTAGE_ANALOG != OFF
+    extern float remoteBatteryVoltage;
+
+    float getBatteryVoltage() {
+      if (!isnan(remoteBatteryVoltage)) return remoteBatteryVoltage;
+      return STAT_DC_ANALOG_TO_VOLTAGE(analog.read(STAT_BATTERY_VOLTAGE_ANALOG));
+    }
+  #endif
+
   void statusTile() {
     char temp[256];
     char temp1[32];
@@ -79,7 +88,7 @@
     #endif
 
     #if STAT_BATTERY_VOLTAGE_ANALOG != OFF
-      getStatusVoltsStr(STAT_DC_ANALOG_TO_VOLTAGE(analog.read(STAT_BATTERY_VOLTAGE_ANALOG)), temp1);
+      getStatusVoltsStr(getBatteryVoltage(), temp1);
       sprintf_P(temp, htmlInnerStatusBat, temp1);
       www.sendContent(temp);
     #endif
@@ -148,7 +157,7 @@
     #endif
 
     #if STAT_BATTERY_VOLTAGE_ANALOG != OFF
-      getStatusVoltsStr(STAT_DC_ANALOG_TO_VOLTAGE(analog.read(STAT_BATTERY_VOLTAGE_ANALOG)), temp);
+      getStatusVoltsStr(getBatteryVoltage(), temp);
       www.sendContent("stat_bat_V|"); www.sendContent(temp); www.sendContent("\n");
     #endif
 
