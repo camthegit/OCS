@@ -253,6 +253,11 @@ void processWirelessShutterTelemetry() {
           pinMode(SENSE1_PIN, OUTPUT); digitalWrite(SENSE1_PIN, HIGH);
           pinMode(SENSE2_PIN, OUTPUT); digitalWrite(SENSE2_PIN, HIGH);
         }
+        else if (shutterStatus == "UNKNOWN") {
+          // FIXED HONEST ROUTING: Neither switch is grounded, indicating a safe, unaligned startup state
+          pinMode(SENSE1_PIN, OUTPUT); digitalWrite(SENSE1_PIN, HIGH);
+          pinMode(SENSE2_PIN, OUTPUT); digitalWrite(SENSE2_PIN, HIGH);
+        }
         if (shutterStatus == "ERROR") {
           // If the roof failed or timed out, call roof.stop() instantly
           roof.stop(); 
