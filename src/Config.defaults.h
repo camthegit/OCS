@@ -319,6 +319,10 @@
 #ifndef SENSE2_ON_STATE
 #define SENSE2_ON_STATE                LOW
 #endif
+
+#ifndef ALPACA_REMOTE_BATTERY_SWITCH
+#define ALPACA_REMOTE_BATTERY_SWITCH   OFF
+#endif
 #ifndef SENSE2_INIT
 #define SENSE2_INIT                    INPUT_PULLUP
 #endif

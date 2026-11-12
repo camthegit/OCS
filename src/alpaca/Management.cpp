@@ -48,7 +48,7 @@ void alpacaManagementConfiguredDevices() {
     devices.add(device);
   #endif
 
-  #if defined(LIGHT_PRESENT) || defined(POWER_PRESENT)
+  #if defined(LIGHT_PRESENT) || defined(POWER_PRESENT) || ALPACA_REMOTE_BATTERY_SWITCH == ON
     device.clear();
     device["DeviceName"] = "OCS Switch";
     device["DeviceType"] = "Switch";

@@ -50,6 +50,9 @@ SenseInput::SenseInput(int pin, int initState, int32_t trigger) {
 }
 
 int SenseInput::isOn() {
+  int8_t overrideState = virtualState;
+  if (overrideState >= 0) return overrideState == 1;
+
   int value = lastValue;
   if (isAnalog) {
     #ifdef ESP32
@@ -72,6 +75,13 @@ int SenseInput::isOn() {
 }
 
 int SenseInput::changed() {
+  int8_t overrideState = virtualState;
+  if (overrideState >= 0) {
+    bool result = virtualChangePending;
+    virtualChangePending = false;
+    return result;
+  }
+
   int value = lastChangedValue;
   if (isAnalog) {
     #ifdef ESP32
@@ -95,6 +105,8 @@ int SenseInput::changed() {
 }
 
 void SenseInput::poll() {
+  if (virtualState >= 0) return;
+
   int value = lastValue;
   if (!isAnalog) {
     int sample = digitalReadEx(pin);
@@ -104,6 +116,23 @@ void SenseInput::poll() {
     if (reverseState) { if (value == LOW) value = HIGH; else value = LOW; }
   }
   lastValue = value;
+}
+
+long SenseInput::stableMillis() {
+  if (isAnalog) return 0;
+  return (long)(millis() - stableStartMs);
+}
+
+void SenseInput::setVirtualState(bool on) {
+  int8_t newState = on ? 1 : 0;
+  int8_t currentState = virtualState;
+  bool previousOn = currentState >= 0 ? currentState == 1 : isOn();
+
+  if (previousOn != on) {
+    stableStartMs = millis();
+    virtualChangePending = true;
+  }
+  virtualState = newState;
 }
 
 void SenseInput::reset() {
@@ -146,6 +175,11 @@ uint8_t Sense::add(int pin, int initState, int32_t trigger, bool force) {
 int Sense::isOn(uint8_t handle) {
   if (handle == 0) return false;
   return senseInput[handle - 1]->isOn();
+}
+
+void Sense::setVirtualState(uint8_t handle, bool on) {
+  if (handle == 0 || handle > senseCount) return;
+  senseInput[handle - 1]->setVirtualState(on);
 }
 
 long Sense::stableMillis(uint8_t handle) {

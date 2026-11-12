@@ -29,7 +29,7 @@ void alpacaSetup() {
     apc.sendContent(F("&nbsp;&nbsp;<a href=\"/setup/v1/safetymonitor/0/setup\">SafetyMonitor</a>\r\n"));
     apc.sendContent(F("&nbsp;&nbsp;<a href=\"/setup/v1/observingconditions/0/setup\">Observing Conditions</a>\r\n"));
   #endif
-  #if defined(LIGHT_PRESENT) || defined(POWER_PRESENT)
+  #if defined(LIGHT_PRESENT) || defined(POWER_PRESENT) || ALPACA_REMOTE_BATTERY_SWITCH == ON
     apc.sendContent(F("&nbsp;&nbsp;<a href=\"/setup/v1/switch/0/setup\">Switch</a>\r\n"));
   #endif
   #if defined(ROOF_PRESENT) || defined(DOME_PRESENT) 
@@ -100,7 +100,7 @@ void alpacaSetup() {
   }
 #endif
 
-#if defined(LIGHT_PRESENT) || defined(POWER_PRESENT)
+#if defined(LIGHT_PRESENT) || defined(POWER_PRESENT) || ALPACA_REMOTE_BATTERY_SWITCH == ON
   void alpacaSetupSwitch() {
     char temp[256] = "";
 
@@ -174,6 +174,11 @@ void alpacaSetup() {
     #endif
     #if LIGHT_WRW_RELAY != OFF || LIGHT_STRIP_DATA_PIN != OFF
       sprintf(temp, "&nbsp;&nbsp;Switch %d: Lights WRW<br/>\r\n", maxSwitch);
+      apc.sendContent(temp);
+      maxSwitch++;
+    #endif
+    #if ALPACA_REMOTE_BATTERY_SWITCH == ON
+      sprintf(temp, "&nbsp;&nbsp;Switch %d: Remote Feather Battery Voltage (read-only)<br/>\r\n", maxSwitch);
       apc.sendContent(temp);
       maxSwitch++;
     #endif

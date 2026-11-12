@@ -3,12 +3,16 @@
 
 #include "../Common.h"
 
-#if ASCOM_ALPACA_SERVER == ON && (defined(LIGHT_PRESENT) || defined(POWER_PRESENT))
+#if ASCOM_ALPACA_SERVER == ON && (defined(LIGHT_PRESENT) || defined(POWER_PRESENT) || ALPACA_REMOTE_BATTERY_SWITCH == ON)
 
 #include <ArduinoJson.h>
 #include "Alpaca.h"
 #include "../libApp/relay/Relay.h"
 #include "../observatory/lighting/Lighting.h"
+
+#if ALPACA_REMOTE_BATTERY_SWITCH == ON
+  #include "../plugins/ShutterBridge/ShutterBridge.h"
+#endif
 
 #define LightORD -1
 #define LightORR -2
@@ -16,13 +20,14 @@
 #define LightWRD -4
 #define LightWRR -5
 #define LightWRW -6
+#define RemoteBatterySwitch -7
 
 extern JsonDocument alpacaJsonDoc;
 int32_t switchConnected = 0;
 int32_t maxSwitch = 0;
-int32_t switchIdentifier[12];
-char switchDescription[12][40];
-char switchName[12][40];
+int32_t switchIdentifier[13];
+char switchDescription[13][40];
+char switchName[13][40];
 
 void findMaxSwitch() {
   maxSwitch = 0;
@@ -98,6 +103,12 @@ void findMaxSwitch() {
     strcpy(switchName[maxSwitch], "Warm Room White Lights");
     maxSwitch++;
   #endif
+  #if ALPACA_REMOTE_BATTERY_SWITCH == ON
+    switchIdentifier[maxSwitch] = RemoteBatterySwitch;
+    strcpy(switchDescription[maxSwitch], "Remote Feather battery voltage (V)");
+    strcpy(switchName[maxSwitch], "Remote Feather Battery Voltage");
+    maxSwitch++;
+  #endif
 }
 
 void alpacaSwitchConnected() {
@@ -132,7 +143,7 @@ void alpacaSwitchCanWrite() {
   if (!switchConnected) { alpacaJsonFinish(NotConnectedException, NotConnectedMessage); return; }
   int id = alpacaArgLowerCase("id").toInt();
   if (id < 0 || id >= maxSwitch) { alpacaJsonFinish(InvalidValueException, InvalidValueMessage); return; }
-  alpacaJsonDoc["Value"] = true;
+  alpacaJsonDoc["Value"] = switchIdentifier[id] != RemoteBatterySwitch;
   alpacaJsonFinish(NoException, "");
 }
 
@@ -141,6 +152,16 @@ void alpacaSwitchGetSwitch() {
   if (!switchConnected) { alpacaJsonFinish(NotConnectedException, NotConnectedMessage); return; }
   int id = alpacaArgLowerCase("id").toInt();
   if (id < 0 || id >= maxSwitch) { alpacaJsonFinish(InvalidValueException, InvalidValueMessage); return; }
+  #if ALPACA_REMOTE_BATTERY_SWITCH == ON
+    if (switchIdentifier[id] == RemoteBatterySwitch) {
+      if (!shutterBridge.batteryVoltageAvailable()) {
+        alpacaJsonFinish(InvalidOperationException, "Remote battery telemetry unavailable"); return;
+      }
+      alpacaJsonDoc["Value"] = shutterBridge.batteryVoltage() > 0.0F;
+      alpacaJsonFinish(NoException, "");
+      return;
+    }
+  #endif
   #ifdef LIGHT_PRESENT
     if (switchIdentifier[id] == LightORD) alpacaJsonDoc["Value"] = (lighting.get(LL_OBSERVING_ROOM) == LM_DIM_RED) ? true : false; else
     if (switchIdentifier[id] == LightORR) alpacaJsonDoc["Value"] = (lighting.get(LL_OBSERVING_ROOM) == LM_RED) ? true : false; else
@@ -176,6 +197,16 @@ void alpacaSwitchGetSwitchValue() {
   if (!switchConnected) { alpacaJsonFinish(NotConnectedException, NotConnectedMessage); return; }
   int id = alpacaArgLowerCase("id").toInt();
   if (id < 0 || id >= maxSwitch) { alpacaJsonFinish(InvalidValueException, InvalidValueMessage); return; }
+  #if ALPACA_REMOTE_BATTERY_SWITCH == ON
+    if (switchIdentifier[id] == RemoteBatterySwitch) {
+      if (!shutterBridge.batteryVoltageAvailable()) {
+        alpacaJsonFinish(InvalidOperationException, "Remote battery telemetry unavailable"); return;
+      }
+      alpacaJsonDoc["Value"] = shutterBridge.batteryVoltage();
+      alpacaJsonFinish(NoException, "");
+      return;
+    }
+  #endif
   #ifdef LIGHT_PRESENT
     if (switchIdentifier[id] == LightORD) alpacaJsonDoc["Value"] = lighting.get(LL_OBSERVING_ROOM) == LM_DIM_RED ? 1.0 : 0.0; else
     if (switchIdentifier[id] == LightORR) alpacaJsonDoc["Value"] = lighting.get(LL_OBSERVING_ROOM) == LM_RED ? 1.0 : 0.0; else
@@ -193,7 +224,7 @@ void alpacaSwitchMaxSwitchValue() {
   if (!switchConnected) { alpacaJsonFinish(NotConnectedException, NotConnectedMessage); return; }
   int id = alpacaArgLowerCase("id").toInt();
   if (id < 0 || id >= maxSwitch) { alpacaJsonFinish(InvalidValueException, InvalidValueMessage); return; }
-  alpacaJsonDoc["Value"] = 1.0;
+  alpacaJsonDoc["Value"] = switchIdentifier[id] == RemoteBatterySwitch ? 5.0 : 1.0;
   alpacaJsonFinish(NoException, "");
 }
 
@@ -211,6 +242,9 @@ void alpacaSwitchSetSwitch() {
   if (!switchConnected) { alpacaJsonFinish(NotConnectedException, NotConnectedMessage); return; }
   int id = alpacaArgLowerCase("id").toInt();
   if (id < 0 || id >= maxSwitch) { alpacaJsonFinish(InvalidValueException, InvalidValueMessage); return; }
+  if (switchIdentifier[id] == RemoteBatterySwitch) {
+    alpacaJsonFinish(InvalidOperationException, "Remote battery switch is read-only"); return;
+  }
   String state = alpacaArgLowerCase("state");
   if (state.equals("true")) {
     #ifdef LIGHT_PRESENT
@@ -246,6 +280,9 @@ void alpacaSwitchSetSwitchValue() {
   if (!switchConnected) { alpacaJsonFinish(NotConnectedException, NotConnectedMessage); return; }
   int id = alpacaArgLowerCase("id").toInt();
   if (id < 0 || id >= maxSwitch) { alpacaJsonFinish(InvalidValueException, InvalidValueMessage); return; }
+  if (switchIdentifier[id] == RemoteBatterySwitch) {
+    alpacaJsonFinish(InvalidOperationException, "Remote battery switch is read-only"); return;
+  }
   int32_t value = round(atof(alpacaArgLowerCase("value").c_str()));
   if (value == 1) {
     #ifdef LIGHT_PRESENT
@@ -276,7 +313,7 @@ void alpacaSwitchSwitchStep() {
   if (!switchConnected) { alpacaJsonFinish(NotConnectedException, NotConnectedMessage); return; }
   int id = alpacaArgLowerCase("id").toInt();
   if (id < 0 || id >= maxSwitch) { alpacaJsonFinish(InvalidValueException, InvalidValueMessage); return; }
-  alpacaJsonDoc["Value"] = 1.0;
+  alpacaJsonDoc["Value"] = switchIdentifier[id] == RemoteBatterySwitch ? 0.01 : 1.0;
   alpacaJsonFinish(NoException, "");
 }
 

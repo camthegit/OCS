@@ -186,7 +186,7 @@ void Observatory::init(const char *fwName, int fwMajor, int fwMinor, const char 
       apc.on("/setup/v1/safetymonitor/" ALPACA_DEVICE_NUMBER "/setup", alpacaSetupSafetyMonitor);
       apc.on("/setup/v1/observingconditions/" ALPACA_DEVICE_NUMBER "/setup", alpacaSetupObservingConditions);
     #endif
-    #if defined(LIGHT_PRESENT) || defined(POWER_PRESENT)
+    #if defined(LIGHT_PRESENT) || defined(POWER_PRESENT) || ALPACA_REMOTE_BATTERY_SWITCH == ON
       apc.on("/setup/v1/switch/" ALPACA_DEVICE_NUMBER "/setup", alpacaSetupSwitch);
     #endif
     #if defined(ROOF_PRESENT) || defined(DOME_PRESENT) 
@@ -241,7 +241,7 @@ void Observatory::init(const char *fwName, int fwMajor, int fwMinor, const char 
       apc.on("/api/v1/observingconditions/" ALPACA_DEVICE_NUMBER "/timesincelastupdate", alpacaObservingConditionsTimeSinceLastUpdate);
     #endif
 
-    #if defined(LIGHT_PRESENT) || defined(POWER_PRESENT)
+    #if defined(LIGHT_PRESENT) || defined(POWER_PRESENT) || ALPACA_REMOTE_BATTERY_SWITCH == ON
       apc.on("/api/v1/switch/" ALPACA_DEVICE_NUMBER "/action", alpacaDefaultAction);
       apc.on("/api/v1/switch/" ALPACA_DEVICE_NUMBER "/commandblind", alpacaMethodNotImplemented);
       apc.on("/api/v1/switch/" ALPACA_DEVICE_NUMBER "/commandbool", alpacaMethodNotImplemented);

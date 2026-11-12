@@ -10,18 +10,14 @@
 
 // Serial ports (see Pins.defaults.h for SERIAL_A)
 // Serial1: RX1 Pin 0, TX1 Pin 1
-// Serial2: RX2 Pin 7, TX2 Pin 8 (Teensy3.5/3.6)
-// Serial3: RX3 Pin 7, TX3 Pin 8 (Teensy4.1)
+// Serial2: RX2 Pin 7, TX2 Pin 8 (Teensy3.5/3.6/4.1)
+// Serial3: RX3 Pin 15, TX3 Pin 14 (Teensy4.1)
 
 #if SERIAL_B_BAUD_DEFAULT != OFF
   #define SERIAL_B              Serial1
 #endif
 #if SERIAL_C_BAUD_DEFAULT != OFF
-  #if defined(ARDUINO_TEENSY41)
-    #define SERIAL_C            Serial3
-  #else
-    #define SERIAL_C            Serial2
-  #endif
+  #define SERIAL_C              Serial2
 #endif
 #if defined(USB_DUAL_SERIAL) || defined(USB_TRIPLE_SERIAL)
   #define SERIAL_D              SerialUSB1

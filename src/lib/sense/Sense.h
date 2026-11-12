@@ -30,10 +30,11 @@ class SenseInput {
     SenseInput(int pin, int initState, int32_t trigger);
 
     int isOn();
-    inline long stableMillis() { return isAnalog ? 0 : (long)(millis() - stableStartMs); }
+    long stableMillis();
 
     int changed();
     inline void reverse(bool state) { reverseState = state; }
+    void setVirtualState(bool on);
 
     void poll();
 
@@ -52,6 +53,8 @@ class SenseInput {
     int lastResult = LOW;
     int stableSample = 0;
     unsigned long stableStartMs = 0;
+    volatile int8_t virtualState = -1;
+    volatile bool virtualChangePending = false;
 };
 
 class Sense {
@@ -68,6 +71,10 @@ class Sense {
     // read the sense associated input pin and return state as configured
     // \param handle      sense handle
     int isOn(uint8_t handle);
+
+    // Override a sense logically without changing or driving its physical pin.
+    // The override remains active until another virtual state is set.
+    void setVirtualState(uint8_t handle, bool on);
 
     // time in milliseconds since the input last changed state
     // \param handle      sense handle

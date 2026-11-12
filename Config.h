@@ -28,7 +28,7 @@
 // SERIAL PORT COMMAND CHANNELS ----------------------------------------------------------------------------------------------------
 #define SERIAL_A_BAUD_DEFAULT        9600 //   9600, n. Where n=9600,19200,57600,115200 (common baud rates.)                  Infreq
 #define SERIAL_B_BAUD_DEFAULT         OFF //    OFF, n. Where n=9600,19200,57600,115200 (common baud rates.)                  Option
-#define SERIAL_C_BAUD_DEFAULT      115200 //    OFF, n. Where n=9600,19200,57600,115200 (common baud rates.)                  Option
+#define SERIAL_C_BAUD_DEFAULT        OFF // ShutterBridge owns Serial2 directly; keep OCS command channel C disabled.
 
 // SERIAL CLIENT CONNECTION TO ONSTEP ----------------------------------------------------------------------------------------------
 #define SERIAL_ONSTEP                 OFF //    OFF, Serial1, NETWORK_STATION, etc. specify serial interface to OnStep.       Option
@@ -43,6 +43,7 @@
 
 // NETWORK SETTINGS ----------------------------------------------------------------------------------------------------------------
 #define ASCOM_ALPACA_SERVER           ON //    OFF, ON enables ASCOM Alpaca server on port 10000, requires W5500 Ethernet.   Option
+#define ALPACA_REMOTE_BATTERY_SWITCH  ON //    OFF, ON exposes Feather battery telemetry as a read-only Alpaca Switch.
                                           //         Note: this disables the IP command servers on ports 9998, 9999 and
                                           //         works best w/my Ethernet library from: https://github.com/hjd1964/Ethernet
 #define CONNECT_CHECK_HOURS           OFF //    OFF, n. Where n=1 to 48 (hours.)  Connection check time.                      Option
